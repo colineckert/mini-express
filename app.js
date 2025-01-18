@@ -10,13 +10,15 @@ app.init = function () {
   this._router = undefined;
 };
 
-for (const method of methods) {
-  app[method] = function (path, ...args) {
+var slice = Array.prototype.slice;
+
+methods.forEach(function (method) {
+  app[method] = function (path) {
     this.lazyrouter();
 
     const route = this._router.route(path);
 
-    route[method].apply(route, args);
+    route[method].apply(route, slice.call(arguments, 1));
     return this;
   };
-}
+});
