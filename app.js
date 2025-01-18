@@ -1,6 +1,6 @@
 const app = (exports = module.exports = {});
-const methods = require('methods');
-const Router = require('./router');
+import { forEach } from 'methods';
+import Router from './router';
 
 app.init = function () {
   this.cache = {};
@@ -13,7 +13,7 @@ app.init = function () {
 
 const slice = Array.prototype.slice;
 
-methods.forEach(function (method) {
+forEach(function (method) {
   app[method] = function (path) {
     this.lazyrouter();
 

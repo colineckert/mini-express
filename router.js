@@ -1,5 +1,5 @@
-const Route = require('./route');
-const Layer = require('./layer');
+import Route from './route';
+import Layer from './layer';
 
 const proto = (module.exports = function (options) {
   const opts = options || {};
@@ -31,3 +31,5 @@ proto.route = function route(path) {
 
   return route;
 };
+
+exports = module.exports = proto;
