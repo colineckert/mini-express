@@ -1,5 +1,6 @@
 const app = (exports = module.exports = {});
 const methods = require('methods');
+const Router = require('./router');
 
 app.init = function () {
   this.cache = {};
@@ -10,7 +11,7 @@ app.init = function () {
   this._router = undefined;
 };
 
-var slice = Array.prototype.slice;
+const slice = Array.prototype.slice;
 
 methods.forEach(function (method) {
   app[method] = function (path) {
@@ -22,3 +23,9 @@ methods.forEach(function (method) {
     return this;
   };
 });
+
+app.lazyrouter = function lazyrouter() {
+  if (!this._router) {
+    this._router = new Router({});
+  }
+};
