@@ -15,7 +15,6 @@ app.init = function () {
 
 const slice = Array.prototype.slice;
 
-
 app.lazyrouter = function lazyrouter() {
   if (!this._router) {
     this._router = new Router({});

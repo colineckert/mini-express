@@ -19,4 +19,8 @@ Layer.prototype.handleRequest = function handle(req, res, next) {
   }
 };
 
+Layer.prototype.match = function match(path) {
+  return this.route.path === path;
+};
+
 exports = module.exports = Layer;
