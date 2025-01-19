@@ -15,7 +15,19 @@ function createApplication() {
   const res = Object.create(http.ServerResponse.prototype);
 
   res.send = function (body) {
-    console.log("wow", body);
+    if (typeof body === "object") {
+      this.json(body);
+    } else if (typeof body === "string") {
+      this.setHeader("Content-Type", "text/plain");
+      this.end(body, "utf-8");
+    }
+
+    return this;
+  };
+
+  res.json = function (body) {
+    this.setHeader("Content-Type", "application/json");
+    return this.send(JSON.stringify(body));
   };
 
   app.request = Object.create(req, {
