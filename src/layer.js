@@ -9,4 +9,14 @@ function Layer(path, options, fn) {
   this.path = undefined;
 }
 
+Layer.prototype.handle_request = function handle(req, res, next) {
+  const fn = this.handle;
+
+  try {
+    fn(req, res, next);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 exports = module.exports = Layer;
