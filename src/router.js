@@ -1,7 +1,7 @@
-const setPrototypeOf = require('setprototypeof');
-const parseUrl = require('parseurl');
-const Route = require('./route');
-const Layer = require('./layer');
+const setPrototypeOf = require("setprototypeof");
+const parseUrl = require("parseurl");
+const Route = require("./route");
+const Layer = require("./layer");
 
 const proto = (module.exports = function (options) {
   const opts = options || {};
@@ -58,7 +58,7 @@ proto.handle = function handle(req, res, out) {
   next();
 
   function next() {
-    const path = getPathname(req) || '/';
+    const path = getPathname(req) || "/";
 
     // find next matching layer
     let layer;
@@ -81,7 +81,20 @@ proto.handle = function handle(req, res, out) {
 
       route.stack[0].handleRequest(req, res, next);
     }
+
+    if (match) {
+      layer.handleRequest(req, res, next);
+    }
   }
+};
+
+proto.use = function use(fn) {
+  const layer = new Layer("/", {}, fn);
+
+  layer.route = undefined;
+  this.stack.push(layer);
+
+  return this;
 };
 
 exports = module.exports = proto;

@@ -1,6 +1,7 @@
-const methods = require('methods');
-const http = require('http');
-const Router = require('./router');
+const methods = require("methods");
+const http = require("http");
+const Router = require("./router");
+const middleware = require("./middleware/init");
 
 var app = (exports = module.exports = {});
 
@@ -19,6 +20,7 @@ app.lazyrouter = function lazyrouter() {
   if (!this._router) {
     this._router = new Router({});
   }
+  this._router.use(middleware.init(this));
 };
 
 app.listen = function listen() {
