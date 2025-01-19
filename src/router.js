@@ -53,30 +53,34 @@ function matchLayer(layer, path) {
 proto.handle = function handle(req, res, out) {
   const self = this;
   const stack = self.stack;
-  console.log(stack);
-  const path = getPathname(req) || '/';
-
-  // find next matching layer
-  let layer;
-  let match;
-  let route;
   let idx = 0;
 
-  while (match !== true && idx < stack.length) {
-    layer = stack[idx++];
-    match = matchLayer(layer, path);
-    route = layer.route;
+  next();
 
-    if (match !== true) {
-      continue;
+  function next() {
+    const path = getPathname(req) || '/';
+
+    // find next matching layer
+    let layer;
+    let match;
+    let route;
+
+    while (match !== true && idx < stack.length) {
+      layer = stack[idx++];
+      match = matchLayer(layer, path);
+      route = layer.route;
+
+      if (match !== true) {
+        continue;
+      }
+
+      if (!route) {
+        // process non-route handlers normally
+        continue;
+      }
+
+      route.stack[0].handleRequest(req, res, next);
     }
-
-    if (!route) {
-      // process non-route handlers normally
-      continue;
-    }
-
-    route.stack[0].handleRequest(req, res);
   }
 };
 
