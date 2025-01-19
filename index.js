@@ -13,9 +13,9 @@ app.get('/2', (req, res) => {
   res.end();
 });
 
-app.get('/posts', (req, res) => {
+app.post('/post', (req, res) => {
   res.writeHead(200);
-  res.write('Hello World from /posts');
+  res.write('Data from post :)');
   res.end();
 });
 
