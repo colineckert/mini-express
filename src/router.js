@@ -38,7 +38,7 @@ proto.handle = function handle(req, res, out) {
   const stack = self.stack;
   const layer = stack[0];
   const route = layer.route;
-  route.stack[0].handle_request(req, res);
+  route.stack[0].handleRequest(req, res);
 };
 
 exports = module.exports = proto;

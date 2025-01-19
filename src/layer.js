@@ -9,7 +9,7 @@ function Layer(path, options, fn) {
   this.path = undefined;
 }
 
-Layer.prototype.handle_request = function handle(req, res, next) {
+Layer.prototype.handleRequest = function handle(req, res, next) {
   const fn = this.handle;
 
   try {
