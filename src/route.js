@@ -1,8 +1,7 @@
-import Layer from './layer';
-import { forEach } from 'methods';
-
-const slice = Array.prototype.slice;
-const flatten = Array.prototype.flat;
+module.exports = Route;
+const methods = require('methods');
+const Layer = require('./layer');
+const flatten = require('array-flatten');
 
 function Route(path) {
   this.path = path;
@@ -11,9 +10,13 @@ function Route(path) {
   this.methods = {};
 }
 
-forEach(function (method) {
+Route.prototype.dispatch = function dispatch(req, res, done) {};
+
+
+
+methods.forEach(function (method) {
   Route.prototype[method] = function () {
-    const handles = flatten(slice.call(arguments));
+    const handles = flatten(Array.prototype.slice.call(arguments));
 
     for (let i = 0; i < handles.length; i++) {
       const handle = handles[i];
@@ -38,5 +41,3 @@ forEach(function (method) {
     return this;
   };
 });
-
-export default Route;

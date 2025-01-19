@@ -9,4 +9,4 @@ function Layer(path, options, fn) {
   this.path = undefined;
 }
 
-export default Layer;
+exports = module.exports = Layer;

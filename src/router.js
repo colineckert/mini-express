@@ -1,5 +1,6 @@
-import Route from './route';
-import Layer from './layer';
+const setPrototypeOf = require('setprototypeof');
+const Route = require('./route');
+const Layer = require('./layer');
 
 const proto = (module.exports = function (options) {
   const opts = options || {};
@@ -8,7 +9,7 @@ const proto = (module.exports = function (options) {
     router.handle(req, res, next);
   }
 
-  Object.setPrototypeOf(router, proto);
+  setPrototypeOf(router, proto);
 
   router.params = {};
   router._params = [];
@@ -30,6 +31,13 @@ proto.route = function route(path) {
   this.stack.push(layer);
 
   return route;
+};
+
+proto.handle = function handle(req, res, out) {
+  const self = this;
+  const stack = self.stack;
+
+  console.log(stack);
 };
 
 exports = module.exports = proto;
