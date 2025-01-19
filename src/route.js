@@ -1,7 +1,7 @@
 module.exports = Route;
 const methods = require('methods');
 const Layer = require('./layer');
-const flatten = require('array-flatten');
+const { flatten } = require('array-flatten');
 
 function Route(path) {
   this.path = path;
@@ -11,8 +11,6 @@ function Route(path) {
 }
 
 Route.prototype.dispatch = function dispatch(req, res, done) {};
-
-
 
 methods.forEach(function (method) {
   Route.prototype[method] = function () {
@@ -31,7 +29,7 @@ methods.forEach(function (method) {
         throw new Error(msg);
       }
 
-      const layer = new Layer('/', {}, handle);
+      const layer = Layer('/', {}, handle);
       layer.method = method;
 
       this.methods[method] = true;
